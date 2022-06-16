@@ -46,6 +46,13 @@ class EventHandler {
             resolve();
         });
     }
+
+    public async reload() {
+        return new Promise<void>((resolve, reject) => {
+            this.bot.removeAllListeners();
+            this.run().catch(reject);
+        });
+    }
 }
 
 export { EventHandler };
