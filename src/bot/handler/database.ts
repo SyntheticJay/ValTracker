@@ -1,5 +1,5 @@
 import { ValorantTracker } from "..";
-import Knex, { knex } from 'knex';
+import Knex from 'knex';
 import { Server } from "guilded.ts";
 
 class DatabaseHandler {

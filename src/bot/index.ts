@@ -41,6 +41,10 @@ class ValorantTracker extends Client {
 	public getLogger(): Logger {
 		return this.logger;
 	}	
+
+	public getDatabaseHandler(): DatabaseHandler {
+		return this.databaseHandler;
+	}
 }
 
 export { ValorantTracker };
