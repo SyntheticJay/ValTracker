@@ -1,0 +1,30 @@
+{
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
+    "eslint": "^8.17.0"
+  },
+  "dependencies": {
+    "@types/node": "^18.0.0",
+    "guilded.ts": "^0.6.1",
+    "tslog": "^3.3.3"
+  },
+  "name": "valoranttracker",
+  "version": "1.0.0",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SyntheticJay/ValTracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SyntheticJay/ValTracker/issues"
+  },
+  "homepage": "https://github.com/SyntheticJay/ValTracker#readme",
+  "description": ""
+}
