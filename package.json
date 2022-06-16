@@ -11,6 +11,7 @@
     "guilded.ts": "^0.6.1",
     "knex": "^2.1.0",
     "mysql": "^2.18.1",
+    "sqlite3": "^5.0.8",
     "tslog": "^3.3.3"
   },
   "name": "valoranttracker",
