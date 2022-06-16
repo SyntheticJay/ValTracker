@@ -1,2 +1,2 @@
-# ValorantTracker
-A Valorant Tracker for Guilded.
+# ValTracker
+A Valorant Tracker bot for Guilded using the Henricks API.
