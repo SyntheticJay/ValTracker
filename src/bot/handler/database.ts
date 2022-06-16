@@ -1,6 +1,6 @@
 import { ValorantTracker } from "..";
-import Knex from 'knex';
 import { Server } from "guilded.ts";
+import Knex from 'knex';
 
 class DatabaseHandler {
     private readonly bot!: ValorantTracker;
