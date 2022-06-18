@@ -4,6 +4,7 @@ import { IConfiguration, config } from '../../config';
 
 import { EventHandler } from './handler/event';
 import { DatabaseHandler } from './handler/database';
+import { CommandHandler } from './handler/command';
 
 import * as node from '@sentry/node';
 
@@ -13,6 +14,7 @@ class ValorantTracker extends Client {
 	private readonly config: IConfiguration;
 	private readonly databaseHandler!: DatabaseHandler;
 	private readonly eventHandler: EventHandler;
+	private readonly commandHandler!: CommandHandler;
 
 	constructor(logger: Logger) {
 		super();
@@ -22,6 +24,7 @@ class ValorantTracker extends Client {
 
 		this.databaseHandler = new DatabaseHandler(this);
 		this.eventHandler = new EventHandler(this);
+		this.commandHandler = new CommandHandler(this);
 	}
 
 	async run(): Promise<void> {
@@ -31,8 +34,9 @@ class ValorantTracker extends Client {
 				tracesSampleRate: 1.0
 			});
 			
+			this.commandHandler.register().catch(reject);
 			this.eventHandler.run().catch(reject);
-
+			
 			try {
 				this.login(this.config.token);
 			}catch(error) {
@@ -51,6 +55,14 @@ class ValorantTracker extends Client {
 
 	public getDatabaseHandler(): DatabaseHandler {
 		return this.databaseHandler;
+	}
+
+	public getEventHandler(): EventHandler {
+		return this.eventHandler;
+	}
+
+	public getCommandHandler(): CommandHandler {
+		return this.commandHandler;
 	}
 }
 
