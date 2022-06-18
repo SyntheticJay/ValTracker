@@ -12,7 +12,13 @@ interface ICommand {
 	aliases: string[];
 	description: string;
 	usage: string;
+	cooldown?: number;
 	handler: (bot: ValorantTracker, message: Message, ...args: any[]) => Promise<void>;
 }
 
-export { IEvent, ICommand };
+interface ICooldown {
+	userID: string;
+	time: number;
+}
+
+export { IEvent, ICommand, ICooldown };
