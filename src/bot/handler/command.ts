@@ -59,6 +59,13 @@ class CommandHandler {
 				`));
 
 				message.reply("Sorry, there was an error. Please try again later. **This has been logged.**");
+				return;
+			});
+
+			this.bot.getDatabaseHandler().logCommand(message.server, authorID, command.name).catch(error => {
+				this.bot.getLogger().error(new Error(`
+					Error in logging command ${command.name}: ${error}
+				`));
 			});
 		}
     }

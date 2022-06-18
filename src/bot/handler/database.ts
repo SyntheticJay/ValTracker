@@ -45,6 +45,22 @@ class DatabaseHandler {
 
         return this.connection.raw('INSERT INTO prefixes (server_id, prefix) VALUES (?, ?) ON DUPLICATE KEY UPDATE prefix = ?', [properID as string, prefix, prefix]);
     }
+
+	async logCommand(serverID: string | Server, userID: string, command: string) {
+		let properID = serverID;
+
+		if(serverID instanceof Server) {
+			properID = serverID.id;
+		}
+
+		return this.connection.raw(`
+			INSERT INTO commands_executed SET
+			server_id = ?,
+			user_id = ?,
+			command = ?,
+			executed_on = NOW()	
+		`, [properID as string, userID, command]);
+	}
 }
 
 export { DatabaseHandler };
