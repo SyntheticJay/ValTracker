@@ -1,69 +1,69 @@
-import { Client } from 'guilded.ts';
-import { Logger } from 'tslog';
-import { IConfiguration, config } from '../../config';
+import { Client } from "guilded.ts";
+import { Logger } from "tslog";
+import { IConfiguration, config } from "../../config";
 
-import { EventHandler } from './handler/event';
-import { DatabaseHandler } from './handler/database';
-import { CommandHandler } from './handler/command';
+import { EventHandler } from "./handler/event";
+import { DatabaseHandler } from "./handler/database";
+import { CommandHandler } from "./handler/command";
 
-import * as node from '@sentry/node';
+import * as node from "@sentry/node";
 
 class ValorantTracker extends Client {
-	private readonly logger!: Logger;
+  private readonly logger!: Logger;
 
-	private readonly config: IConfiguration;
-	private readonly databaseHandler!: DatabaseHandler;
-	private readonly eventHandler: EventHandler;
-	private readonly commandHandler!: CommandHandler;
+  private readonly config: IConfiguration;
+  private readonly databaseHandler!: DatabaseHandler;
+  private readonly eventHandler: EventHandler;
+  private readonly commandHandler!: CommandHandler;
 
-	constructor(logger: Logger) {
-		super();
-		
-		this.logger = logger;
-		this.config = config;
+  constructor(logger: Logger) {
+    super();
 
-		this.databaseHandler = new DatabaseHandler(this);
-		this.eventHandler = new EventHandler(this);
-		this.commandHandler = new CommandHandler(this);
-	}
+    this.logger = logger;
+    this.config = config;
 
-	async run(): Promise<void> {
-		return new Promise<void>((resolve, reject) => {
-			node.init({
-				dsn: this.config.sentryDSN,
-				tracesSampleRate: 1.0
-			});
-			
-			this.commandHandler.register().catch(reject);
-			this.eventHandler.run().catch(reject);
-			
-			try {
-				this.login(this.config.token);
-			}catch(error) {
-				reject(error);
-			}
-		});
-	}
+    this.databaseHandler = new DatabaseHandler(this);
+    this.eventHandler = new EventHandler(this);
+    this.commandHandler = new CommandHandler(this);
+  }
 
-	public getConfig(): IConfiguration {
-		return this.config;
-	}
+  async run(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      node.init({
+        dsn: this.config.sentryDSN,
+        tracesSampleRate: 1.0,
+      });
 
-	public getLogger(): Logger {
-		return this.logger;
-	}	
+      this.commandHandler.register().catch(reject);
+      this.eventHandler.run().catch(reject);
 
-	public getDatabaseHandler(): DatabaseHandler {
-		return this.databaseHandler;
-	}
+      try {
+        this.login(this.config.token);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
 
-	public getEventHandler(): EventHandler {
-		return this.eventHandler;
-	}
+  public getConfig(): IConfiguration {
+    return this.config;
+  }
 
-	public getCommandHandler(): CommandHandler {
-		return this.commandHandler;
-	}
+  public getLogger(): Logger {
+    return this.logger;
+  }
+
+  public getDatabaseHandler(): DatabaseHandler {
+    return this.databaseHandler;
+  }
+
+  public getEventHandler(): EventHandler {
+    return this.eventHandler;
+  }
+
+  public getCommandHandler(): CommandHandler {
+    return this.commandHandler;
+  }
 }
 
 export { ValorantTracker };

@@ -13,6 +13,7 @@
     "guilded.ts": "^0.6.1",
     "knex": "^2.1.0",
     "mysql": "^2.18.1",
+    "prettier": "^2.7.1",
     "sqlite3": "^5.0.8",
     "ts-node": "^10.8.1",
     "tslog": "^3.3.3",
@@ -22,7 +23,8 @@
   "version": "1.0.0",
   "main": ".eslintrc.js",
   "scripts": {
-    "dev": "ts-node src/index.ts"
+    "dev": "ts-node src/index.ts",
+    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
   "repository": {
     "type": "git",
