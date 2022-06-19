@@ -1,5 +1,5 @@
 import { IEvent } from "../types";
-import { ValorantTracker } from "..";
+import { ValorantTracker } from "../index";
 import { Message } from "guilded.ts";
 
 export const event: IEvent = {

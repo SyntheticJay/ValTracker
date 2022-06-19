@@ -1,5 +1,5 @@
 import { Message } from "guilded.ts";
-import { ValorantTracker } from "..";
+import { ValorantTracker } from "../index";
 import { ICommand } from "../types";
 
 export const command: ICommand = {

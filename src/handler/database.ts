@@ -1,4 +1,4 @@
-import { ValorantTracker } from "..";
+import { ValorantTracker } from "../index";
 import { Server } from "guilded.ts";
 import Knex from "knex";
 

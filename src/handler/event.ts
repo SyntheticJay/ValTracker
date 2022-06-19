@@ -1,4 +1,4 @@
-import { ValorantTracker } from "..";
+import { ValorantTracker } from "../index";
 import { readdirSync } from "fs";
 import { join } from "path";
 import { IEvent } from "../types";

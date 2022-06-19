@@ -1,5 +1,5 @@
 import { IEvent } from "../types";
-import { ValorantTracker } from "..";
+import { ValorantTracker } from "../index";
 
 export const event: IEvent = {
   name: "ready",

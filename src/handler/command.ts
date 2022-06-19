@@ -1,9 +1,9 @@
 import { Message } from "guilded.ts";
-import { ValorantTracker } from "..";
+import { ValorantTracker } from "../index";
 import { ICommand, ICooldown, MessageType } from "../types";
 import { readdirSync } from "fs";
 import { join } from "path";
-import { CustomEmbed } from "../";
+import { CustomEmbed } from "../index";
 
 class CommandHandler {
   private readonly bot!: ValorantTracker;

@@ -1,4 +1,4 @@
-import { ValorantTracker } from ".";
+import { ValorantTracker } from "./index";
 import { ClientEvents, Message } from "guilded.ts";
 
 interface IEvent {
