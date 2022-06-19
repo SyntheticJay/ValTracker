@@ -46,6 +46,7 @@ export const command: ICommand = {
           );
       });
 
+    /* FIXME - server name? */
     await bot
       .getCommandHandler()
       .sendMessage(
