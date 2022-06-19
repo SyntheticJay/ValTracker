@@ -4,8 +4,8 @@ import { ICommand } from "../types";
 import { CustomEmbed } from "../embed";
 
 export const command: ICommand = {
-  name: "about",
-  description: "About Valorant Tracker",
+  name: "invite",
+  description: "Invite Valorant Tracker to your community",
   usage: "",
   aliases: [],
   handler: async (
@@ -15,10 +15,9 @@ export const command: ICommand = {
   ): Promise<void> => {
     await bot.getCommandHandler().sendEmbed(message, [
       new CustomEmbed().setDescription(`
-          Hi! I'm Valorant Tracker, also known as ValoTracker. I'm a Valorant Statistics Tracker for Guilded.
-          
-          Get started by registering your username#tag now with **>register (user#tag)**
-          Or navigate around with **>help**
+       [Click here to invite **Valorant Tracker** to your community.](${
+         bot.getConfig().invite
+       })
       `),
     ]);
   },

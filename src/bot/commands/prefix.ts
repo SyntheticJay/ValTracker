@@ -4,7 +4,7 @@ import { ICommand } from "../types";
 
 export const command: ICommand = {
   name: "prefix",
-  description: "Set the prefix for your server.",
+  description: "Set the prefix for your server",
   usage: "prefix <prefix (or do not specify for default)>",
   aliases: ["p"],
   handler: async (
