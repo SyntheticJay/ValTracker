@@ -1,6 +1,6 @@
-import { Message } from "guilded.ts";
+import { Message, Server } from "guilded.ts";
 import { ValorantTracker } from "..";
-import { ICommand } from "../types";
+import { ICommand, MessageType } from "../types";
 
 export const command: ICommand = {
   name: "prefix",
@@ -15,7 +15,13 @@ export const command: ICommand = {
     const prefix = args[0] || bot.getConfig().defaultPrefix;
 
     if (prefix.length > 3) {
-      await message.reply("The prefix cannot be longer than 3 characters.");
+      await bot
+        .getCommandHandler()
+        .sendMessage(
+          message,
+          "The prefix cannot be longer than 3 characters.",
+          "FAIL"
+        );
       return;
     }
 
@@ -30,13 +36,21 @@ export const command: ICommand = {
               `There was an error setting prefix for server ${message.server.id}: ${error}`
             )
           );
-        await message.reply(
-          `An error occurred while setting the prefix. Please try again later.`
-        );
+        await bot
+          .getCommandHandler()
+          .sendMessage(
+            message,
+            `An error occurred while setting the prefix. Please try again later.`,
+            "FAIL"
+          );
       });
 
-    await message.reply(
-      `The prefix for **${message.server.raw}** has been set to \`${prefix}\`.`
-    );
+    await bot
+      .getCommandHandler()
+      .sendMessage(
+        message,
+        `The prefix for **${"test"}** has been set to \`${prefix}\`.`,
+        "INFO"
+      );
   },
 };

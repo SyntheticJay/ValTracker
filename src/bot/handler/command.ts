@@ -1,8 +1,9 @@
-import { Message } from "guilded.ts";
+import { Channel, ChatChannel, Message } from "guilded.ts";
 import { ValorantTracker } from "..";
-import { ICommand, ICooldown } from "../types";
+import { ICommand, ICooldown, MessageType } from "../types";
 import { readdirSync } from "fs";
 import { join } from "path";
+import { CustomEmbed } from "../embed";
 
 class CommandHandler {
   private readonly bot!: ValorantTracker;
@@ -52,7 +53,7 @@ class CommandHandler {
 
       if (cooldown) {
         if (Date.now() < cooldown.time) {
-          message.reply(
+          await message.reply(
             `You can use this command again in ${
               (cooldown.time - Date.now()) / 1000
             } seconds.`
@@ -94,6 +95,22 @@ class CommandHandler {
           );
         });
     }
+  }
+
+  public async sendMessage(
+    message: Message,
+    content: string,
+    type: keyof typeof MessageType
+  ): Promise<void> {
+    const emoji = MessageType[type];
+
+    await message.channel?.send(`${emoji} | ${content}`);
+  }
+
+  public async sendEmbed(message: Message, embed: CustomEmbed[]) {
+    await message.channel?.send({
+      embeds: embed,
+    });
   }
 }
 

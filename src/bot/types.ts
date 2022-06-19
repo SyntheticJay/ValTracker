@@ -25,4 +25,10 @@ interface ICooldown {
   time: number;
 }
 
-export { IEvent, ICommand, ICooldown };
+enum MessageType {
+  INFO = "",
+  SUCCESS = "",
+  FAIL = "",
+}
+
+export { IEvent, ICommand, ICooldown, MessageType };
