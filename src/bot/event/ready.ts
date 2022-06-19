@@ -10,7 +10,5 @@ export const event: IEvent = {
       .info(
         `Logged in as ${bot.user?.name} | ${bot.servers.cache.size} Servers`
       );
-
-    /* TODO: on join message (find general chat, etc) */
   },
 };
