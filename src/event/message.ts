@@ -1,4 +1,4 @@
-import { IEvent } from "../types";
+import { IEvent, IServerConfiguration } from "../types";
 import { ValorantTracker } from "../index";
 import { Message } from "guilded.ts";
 
@@ -6,30 +6,41 @@ export const event: IEvent = {
   name: "messageCreate",
   once: false,
   handler: async (bot: ValorantTracker, message: Message): Promise<void> => {
-    const prefixResult = await bot
+    await bot
       .getDatabaseHandler()
-      .getPrefix(message.server)
-      .catch((error) => {
+      .getServerConfiguration(message.server)
+      .catch(async (error) => {
         bot
           .getLogger()
           .error(
-            new Error(`Failed to get prefix for ${message.server.id}: ${error}`)
+            new Error(
+              `Failed to fetch server configuration for server ID ${message.server.id}: ${error}`
+            )
           );
-      });
 
-    bot
-      .getCommandHandler()
-      .run(message, prefixResult.prefix || bot.getConfig().defaultPrefix)
-      .catch(async (error) => {
-        bot.getLogger().error(
-          new Error(`
+        return await bot
+          .getCommandHandler()
+          .sendMessage(
+            message,
+            "There was an error fetching configurations for your server. **This has been logged.**",
+            "FAIL"
+          );
+      })
+      .then((result) => {
+        bot
+          .getCommandHandler()
+          .run(message, <IServerConfiguration>result)
+          .catch(async (error) => {
+            bot.getLogger().error(
+              new Error(`
                 Error in running command: ${error}
             `)
-        );
+            );
 
-        await message.reply(
-          "Sorry, there was an error. Please try again later. **This has been logged.**"
-        );
+            return await message.reply(
+              "Sorry, there was an error. Please try again later. **This has been logged.**"
+            );
+          });
       });
   },
 };

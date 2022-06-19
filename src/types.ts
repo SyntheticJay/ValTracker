@@ -1,5 +1,6 @@
 import { ValorantTracker } from "./index";
 import { ClientEvents, Message } from "guilded.ts";
+import { RowDataPacket } from "mysql2";
 
 interface IEvent {
   name: keyof ClientEvents;
@@ -16,7 +17,7 @@ interface ICommand {
   handler: (
     bot: ValorantTracker,
     message: Message,
-    serverPrefix: string,
+    serverPrefix: IServerConfiguration,
     ...args: any[]
   ) => Promise<void>;
 }
@@ -26,10 +27,16 @@ interface ICooldown {
   time: number;
 }
 
+interface IServerConfiguration extends RowDataPacket {
+  serverID: string;
+  prefix: string;
+  patchNotesID: string;
+}
+
 enum MessageType {
   INFO = "",
   SUCCESS = "",
   FAIL = "",
 }
 
-export { IEvent, ICommand, ICooldown, MessageType };
+export { IEvent, ICommand, ICooldown, IServerConfiguration, MessageType };

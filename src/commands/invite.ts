@@ -1,6 +1,6 @@
 import { Message } from "guilded.ts";
 import { ValorantTracker } from "../index";
-import { ICommand } from "../types";
+import { ICommand, IServerConfiguration } from "../types";
 import { CustomEmbed } from "../index";
 
 export const command: ICommand = {
@@ -11,10 +11,10 @@ export const command: ICommand = {
   handler: async (
     bot: ValorantTracker,
     message: Message,
-    prefix: string,
+    serverConfig: IServerConfiguration,
     args: any[]
   ): Promise<void> => {
-    await bot.getCommandHandler().sendEmbed(message, [
+    return await bot.getCommandHandler().sendEmbed(message, [
       new CustomEmbed().setDescription(`
        [Click here to invite **Valorant Tracker** to your community.](${
          bot.getConfig().invite

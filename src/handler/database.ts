@@ -1,6 +1,7 @@
 import { ValorantTracker } from "../index";
 import { Server } from "guilded.ts";
 import Knex from "knex";
+import { IServerConfiguration } from "../types";
 
 class DatabaseHandler {
   private readonly bot!: ValorantTracker;
@@ -12,7 +13,7 @@ class DatabaseHandler {
     const { host, auth, name } = this.bot.getConfig().database;
 
     const knex = Knex({
-      client: "mysql",
+      client: "mysql2",
       connection: {
         host,
         user: auth.user,
@@ -24,30 +25,40 @@ class DatabaseHandler {
     this.connection = knex;
   }
 
-  async getPrefix(serverID: string | Server) {
-    let properID = serverID;
+  /* TODO: A better way of doing this? */
+  async getServerConfiguration(
+    serverID: string | Server
+  ): Promise<IServerConfiguration> {
+    return new Promise<IServerConfiguration>((resolve, reject) => {
+      let properID = serverID;
 
-    if (serverID instanceof Server) {
-      properID = serverID.id;
-    }
+      if (serverID instanceof Server) {
+        properID = serverID.id;
+      }
 
-    return this.connection("prefixes")
-      .select("prefix")
-      .where("server_id", properID as string)
-      .first();
-  }
+      this.connection("server_settings")
+        .select("*")
+        .where({
+          server_id: properID,
+        })
+        .then(async (rows) => {
+          if (rows.length == 0) {
+            await this.connection
+              .raw(
+                "INSERT INTO server_settings SET server_id = ?, prefix = ?",
+                [properID as string, this.bot.getConfig().defaultPrefix]
+              )
+              .catch(reject);
+          }
 
-  async setPrefix(serverID: string | Server, prefix: string) {
-    let properID = serverID;
-
-    if (serverID instanceof Server) {
-      properID = serverID.id;
-    }
-
-    return this.connection.raw(
-      "INSERT INTO prefixes (server_id, prefix) VALUES (?, ?) ON DUPLICATE KEY UPDATE prefix = ?",
-      [properID as string, prefix, prefix]
-    );
+          resolve(
+            this.connection("server_settings")
+              .select("*")
+              .where({ server_id: properID })
+              .first()
+          );
+        });
+    });
   }
 
   async logCommand(serverID: string | Server, userID: string, command: string) {

@@ -1,6 +1,11 @@
 import { Message } from "guilded.ts";
 import { ValorantTracker } from "../index";
-import { ICommand, ICooldown, MessageType } from "../types";
+import {
+  ICommand,
+  ICooldown,
+  MessageType,
+  IServerConfiguration,
+} from "../types";
 import { readdirSync } from "fs";
 import { join } from "path";
 import { CustomEmbed } from "../index";
@@ -34,11 +39,14 @@ class CommandHandler {
     });
   }
 
-  public async run(message: Message, prefix: string): Promise<void> {
-    if (!message.content?.startsWith(prefix)) return;
+  public async run(
+    message: Message,
+    serverConfig: IServerConfiguration
+  ): Promise<void> {
+    if (!message.content?.startsWith(serverConfig.prefix)) return;
 
     const args: string[] = message.content
-      .slice(prefix.length)
+      .slice(serverConfig.prefix.length)
       .trim()
       .split(/ +/g);
     const commandName: string = args.shift()?.toLowerCase() || "";
@@ -71,18 +79,20 @@ class CommandHandler {
           (command.cooldown || this.bot.getConfig().defaultCooldown),
       });
 
-      command.handler(this.bot, message, prefix, args).catch(async (error) => {
-        this.bot
-          .getLogger()
-          .error(
-            new Error(`Error in running command ${command.name}: ${error}`)
-          );
+      command
+        .handler(this.bot, message, serverConfig, args)
+        .catch(async (error) => {
+          this.bot
+            .getLogger()
+            .error(
+              new Error(`Error in running command ${command.name}: ${error}`)
+            );
 
-        await message.reply(
-          "Sorry, there was an error. Please try again later. **This has been logged.**"
-        );
-        return;
-      });
+          await message.reply(
+            "Sorry, there was an error. Please try again later. **This has been logged.**"
+          );
+          return;
+        });
 
       this.bot
         .getDatabaseHandler()
