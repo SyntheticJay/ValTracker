@@ -27,20 +27,20 @@ export const event: IEvent = {
           );
       })
       .then(async (result) => {
+        result = <IServerConfiguration>result;
+
         if (message.content == "valtracker:prefix") {
           return await bot
             .getCommandHandler()
             .sendMessage(
               message,
-              `The prefix for this server is '${
-                (<IServerConfiguration>result).prefix
-              }'`,
+              `The prefix for this server is '${result.prefix}'`,
               "INFO"
             );
         }
         bot
           .getCommandHandler()
-          .run(message, <IServerConfiguration>result)
+          .run(message, result)
           .catch(async (error) => {
             bot.getLogger().error(
               new Error(`
