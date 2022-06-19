@@ -71,14 +71,14 @@ class CommandHandler {
           (command.cooldown || this.bot.getConfig().defaultCooldown),
       });
 
-      command.handler(this.bot, message, prefix, args).catch((error) => {
+      command.handler(this.bot, message, prefix, args).catch(async (error) => {
         this.bot.getLogger().error(
           new Error(`
 					Error in running command ${command.name}: ${error}
 				`)
         );
 
-        message.reply(
+        await message.reply(
           "Sorry, there was an error. Please try again later. **This has been logged.**"
         );
         return;
