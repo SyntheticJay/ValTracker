@@ -3,7 +3,7 @@ import { ValorantTracker } from "..";
 import { ICommand, ICooldown, MessageType } from "../types";
 import { readdirSync } from "fs";
 import { join } from "path";
-import { CustomEmbed } from "../extends";
+import { CustomEmbed } from "../";
 
 class CommandHandler {
   private readonly bot!: ValorantTracker;

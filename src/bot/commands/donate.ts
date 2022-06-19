@@ -1,7 +1,7 @@
 import { Message } from "guilded.ts";
 import { ValorantTracker } from "..";
 import { ICommand } from "../types";
-import { CustomEmbed } from "../extends";
+import { CustomEmbed } from "../";
 
 export const command: ICommand = {
   name: "donate",

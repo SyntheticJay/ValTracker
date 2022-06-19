@@ -1,4 +1,4 @@
-import { Client } from "guilded.ts";
+import { Client, Embed } from "guilded.ts";
 import { Logger } from "tslog";
 import { IConfiguration, config } from "../../config";
 
@@ -66,4 +66,18 @@ class ValorantTracker extends Client {
   }
 }
 
-export { ValorantTracker };
+class CustomEmbed extends Embed {
+  constructor() {
+    super();
+
+    this.setFooter(
+      `${
+        this.footer ? this.footer : ""
+      } · valotracker.net (${new Date().toLocaleString()})`
+    );
+
+    this.setTitle(`Valorant Tracker ${this.title ? `· ${this.title}` : ""}`);
+  }
+}
+
+export { ValorantTracker, CustomEmbed };
