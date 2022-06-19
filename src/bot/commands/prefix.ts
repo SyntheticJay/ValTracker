@@ -1,6 +1,6 @@
-import { Message, Server } from "guilded.ts";
+import { Message } from "guilded.ts";
 import { ValorantTracker } from "..";
-import { ICommand, MessageType } from "../types";
+import { ICommand } from "../types";
 
 export const command: ICommand = {
   name: "prefix",
