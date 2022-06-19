@@ -1,4 +1,4 @@
-import { Channel, ChatChannel, Message } from "guilded.ts";
+import { Message } from "guilded.ts";
 import { ValorantTracker } from "..";
 import { ICommand, ICooldown, MessageType } from "../types";
 import { readdirSync } from "fs";
@@ -8,7 +8,7 @@ import { CustomEmbed } from "../extends";
 class CommandHandler {
   private readonly bot!: ValorantTracker;
   private readonly commands!: ICommand[];
-  private cooldowns: ICooldown[];
+  private readonly cooldowns: ICooldown[];
 
   constructor(bot: ValorantTracker) {
     this.bot = bot;
@@ -72,11 +72,11 @@ class CommandHandler {
       });
 
       command.handler(this.bot, message, prefix, args).catch(async (error) => {
-        this.bot.getLogger().error(
-          new Error(`
-					Error in running command ${command.name}: ${error}
-				`)
-        );
+        this.bot
+          .getLogger()
+          .error(
+            new Error(`Error in running command ${command.name}: ${error}`)
+          );
 
         await message.reply(
           "Sorry, there was an error. Please try again later. **This has been logged.**"
@@ -88,11 +88,11 @@ class CommandHandler {
         .getDatabaseHandler()
         .logCommand(message.server, authorID, command.name)
         .catch((error) => {
-          this.bot.getLogger().error(
-            new Error(`
-					Error in logging command ${command.name}: ${error}
-				`)
-          );
+          this.bot
+            .getLogger()
+            .error(
+              new Error(`Error in logging command ${command.name}: ${error}`)
+            );
         });
     }
   }

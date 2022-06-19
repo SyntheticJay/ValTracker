@@ -30,21 +30,25 @@ class EventHandler {
             if (once) {
               this.bot.once(name, (...args: unknown[]) => {
                 event.handler(this.bot, ...args).catch((error) => {
-                  this.bot.getLogger().fatal(
-                    new Error(`
-                        An error occurred while running event ${name}: ${error.message}
-                    `)
-                  );
+                  this.bot
+                    .getLogger()
+                    .fatal(
+                      new Error(
+                        `An error occurred while running event ${name}: ${error.message}`
+                      )
+                    );
                 });
               });
             } else {
               this.bot.on(name, (...args: unknown[]) => {
                 event.handler(this.bot, ...args).catch((error) => {
-                  this.bot.getLogger().fatal(
-                    new Error(`
-                         An error occurred while running event ${name}: ${error.message}
-                    `)
-                  );
+                  this.bot
+                    .getLogger()
+                    .fatal(
+                      new Error(
+                        `An error occurred while running event ${name}: ${error.message}`
+                      )
+                    );
                 });
               });
             }

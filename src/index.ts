@@ -10,17 +10,11 @@ import { Logger } from "tslog";
 
   await bot.run().catch((error) => {
     logger.fatal(
-      new Error(`
-			An error occurred while running the bot: ${error.message}
-		`)
+      new Error(`An error occurred while running the bot: ${error.message}`)
     );
   });
 
   process.on("unhandledRejection", (error) => {
-    logger.fatal(
-      new Error(`
-			Unhandled Rejection: ${error}
-		`)
-    );
+    logger.fatal(new Error(`Unhandled Rejection: ${error}`));
   });
 })();
