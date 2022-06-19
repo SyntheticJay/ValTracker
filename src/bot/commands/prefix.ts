@@ -15,14 +15,14 @@ export const command: ICommand = {
     const prefix = args[0] || bot.getConfig().defaultPrefix;
 
     if (prefix.length > 3) {
-      message.reply("The prefix cannot be longer than 3 characters.");
+      await message.reply("The prefix cannot be longer than 3 characters.");
       return;
     }
 
     bot
       .getDatabaseHandler()
       .setPrefix(message.server, prefix)
-      .catch((error) => {
+      .catch(async (error) => {
         bot
           .getLogger()
           .error(
@@ -30,12 +30,12 @@ export const command: ICommand = {
               `There was an error setting prefix for server ${message.server.id}: ${error}`
             )
           );
-        message.reply(
+        await message.reply(
           `An error occurred while setting the prefix. Please try again later.`
         );
       });
 
-    message.reply(
+    await message.reply(
       `The prefix for **${message.server.raw}** has been set to \`${prefix}\`.`
     );
   },
