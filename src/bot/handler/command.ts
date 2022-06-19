@@ -36,8 +36,6 @@ class CommandHandler {
   public async run(message: Message, prefix: string): Promise<void> {
     if (!message.content?.startsWith(prefix)) return;
 
-    this.bot.getLogger().info("lol");
-
     const args: string[] = message.content
       .slice(prefix.length)
       .trim()

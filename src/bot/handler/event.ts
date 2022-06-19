@@ -32,8 +32,8 @@ class EventHandler {
                 event.handler(this.bot, ...args).catch((error) => {
                   this.bot.getLogger().fatal(
                     new Error(`
-                                    An error occurred while running event ${name}: ${error.message}
-                                `)
+                        An error occurred while running event ${name}: ${error.message}
+                    `)
                   );
                 });
               });
@@ -42,8 +42,8 @@ class EventHandler {
                 event.handler(this.bot, ...args).catch((error) => {
                   this.bot.getLogger().fatal(
                     new Error(`
-                                    An error occurred while running event ${name}: ${error.message}
-                                `)
+                         An error occurred while running event ${name}: ${error.message}
+                    `)
                   );
                 });
               });
