@@ -61,6 +61,15 @@ class DatabaseHandler {
     });
   }
 
+  async updateServerConfiguration(config: IServerConfiguration): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      return this.connection("server_settings")
+        .update(config)
+        .then(() => resolve())
+        .catch(reject);
+    });
+  }
+
   async logCommand(serverID: string | Server, userID: string, command: string) {
     let properID = serverID;
 

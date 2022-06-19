@@ -1,5 +1,5 @@
 import { ValorantTracker } from "./index";
-import { ClientEvents, Message } from "guilded.ts";
+import { ClientEvents, Message, Server } from "guilded.ts";
 import { RowDataPacket } from "mysql2";
 
 interface IEvent {
@@ -25,19 +25,20 @@ interface ICooldown {
 interface IServerConfiguration extends RowDataPacket {
   serverID: string;
   prefix: string;
-  patchNotesID: string;
+  patch_notes: string;
 }
 
 interface ICommandContext {
   message: Message;
+  server: Server;
   config: IServerConfiguration;
   args: any[];
 }
 
 enum MessageType {
-  INFO = "",
-  SUCCESS = "",
-  FAIL = "",
+  INFO = "🙂" /* lol */,
+  SUCCESS = "✔️",
+  FAIL = "⚠️",
 }
 
 export {

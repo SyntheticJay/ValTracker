@@ -62,6 +62,7 @@ class CommandHandler {
       command
         .handler(this.bot, {
           message: message,
+          server: message.server,
           config: serverConfig,
           args: args,
         } as ICommandContext)
