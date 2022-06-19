@@ -29,7 +29,7 @@ class EventHandler {
 
             if (once) {
               this.bot.once(name, (...args: unknown[]) => {
-                event.handler(this.bot, ...args).catch((error) => {
+                return event.handler(this.bot, ...args).catch((error) => {
                   this.bot
                     .getLogger()
                     .fatal(
@@ -40,8 +40,9 @@ class EventHandler {
                 });
               });
             } else {
+              /* event getting called twice? maybe to update some kind of cache, I really don't know. potential FIXME? */
               this.bot.on(name, (...args: unknown[]) => {
-                event.handler(this.bot, ...args).catch((error) => {
+                return event.handler(this.bot, ...args).catch((error) => {
                   this.bot
                     .getLogger()
                     .fatal(

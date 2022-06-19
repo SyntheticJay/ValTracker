@@ -14,12 +14,7 @@ interface ICommand {
   description: string;
   usage: string;
   cooldown?: number;
-  handler: (
-    bot: ValorantTracker,
-    message: Message,
-    serverPrefix: IServerConfiguration,
-    ...args: any[]
-  ) => Promise<void>;
+  handler: (bot: ValorantTracker, context: ICommandContext) => Promise<void>;
 }
 
 interface ICooldown {
@@ -33,10 +28,23 @@ interface IServerConfiguration extends RowDataPacket {
   patchNotesID: string;
 }
 
+interface ICommandContext {
+  message: Message;
+  config: IServerConfiguration;
+  args: any[];
+}
+
 enum MessageType {
   INFO = "",
   SUCCESS = "",
   FAIL = "",
 }
 
-export { IEvent, ICommand, ICooldown, IServerConfiguration, MessageType };
+export {
+  IEvent,
+  ICommand,
+  ICooldown,
+  IServerConfiguration,
+  ICommandContext,
+  MessageType,
+};

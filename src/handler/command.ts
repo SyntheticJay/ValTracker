@@ -5,6 +5,7 @@ import {
   ICooldown,
   MessageType,
   IServerConfiguration,
+  ICommandContext,
 } from "../types";
 import { readdirSync } from "fs";
 import { join } from "path";
@@ -13,7 +14,7 @@ import { CustomEmbed } from "../index";
 class CommandHandler {
   private readonly bot!: ValorantTracker;
   private readonly commands!: ICommand[];
-  private readonly cooldowns: ICooldown[];
+  private cooldowns: ICooldown[];
 
   constructor(bot: ValorantTracker) {
     this.bot = bot;
@@ -57,30 +58,13 @@ class CommandHandler {
 
     if (command) {
       const authorID = message.authorId;
-      const cooldown = this.cooldowns.find((c) => c.userID === authorID);
-
-      if (cooldown) {
-        if (Date.now() < cooldown.time) {
-          await message.reply(
-            `You can use this command again in ${
-              (cooldown.time - Date.now()) / 1000
-            } seconds.`
-          );
-          return;
-        }
-
-        delete this.cooldowns[this.cooldowns.indexOf(cooldown)];
-      }
-
-      this.cooldowns.push({
-        userID: authorID,
-        time:
-          Date.now() +
-          (command.cooldown || this.bot.getConfig().defaultCooldown),
-      });
 
       command
-        .handler(this.bot, message, serverConfig, args)
+        .handler(this.bot, {
+          message: message,
+          config: serverConfig,
+          args: args,
+        } as ICommandContext)
         .catch(async (error) => {
           this.bot
             .getLogger()

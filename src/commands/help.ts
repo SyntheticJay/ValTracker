@@ -1,6 +1,5 @@
-import { Message } from "guilded.ts";
 import { ValorantTracker } from "../index";
-import { ICommand, IServerConfiguration } from "../types";
+import { ICommand, ICommandContext } from "../types";
 import { CustomEmbed } from "../index";
 
 export const command: ICommand = {
@@ -10,9 +9,7 @@ export const command: ICommand = {
   aliases: ["h"],
   handler: async (
     bot: ValorantTracker,
-    message: Message,
-    serverConfig: IServerConfiguration,
-    args: any[]
+    context: ICommandContext
   ): Promise<void> => {
     const embed = new CustomEmbed().setTitle("Help");
 
@@ -23,15 +20,15 @@ export const command: ICommand = {
 
     commands.forEach((command) => {
       embed.addField(
-        `${serverConfig.prefix}${command.name}`,
+        `${context.config.prefix}${command.name}`,
         `${command.description} | **${
           command.usage == ""
             ? command.name
-            : `${serverConfig.prefix}${command.usage}`
+            : `${context.config.prefix}${command.usage}`
         }**`
       );
     });
 
-    return await bot.getCommandHandler().sendEmbed(message, [embed]);
+    return await bot.getCommandHandler().sendEmbed(context.message, [embed]);
   },
 };
