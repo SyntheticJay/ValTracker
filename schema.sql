@@ -1,19 +1,3 @@
-/*
- Navicat MariaDB Data Transfer
-
- Source Server         : ValoTracker
- Source Server Type    : MariaDB
- Source Server Version : 100332
- Source Host           : 93.114.133.122:3306
- Source Schema         : valotracker
-
- Target Server Type    : MariaDB
- Target Server Version : 100332
- File Encoding         : 65001
-
- Date: 19/06/2022 21:41:13
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
