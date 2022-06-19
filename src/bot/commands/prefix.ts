@@ -10,11 +10,12 @@ export const command: ICommand = {
   handler: async (
     bot: ValorantTracker,
     message: Message,
+    prefix: string,
     args: any[]
   ): Promise<void> => {
-    const prefix = args[0] || bot.getConfig().defaultPrefix;
+    const argument = args[0] || bot.getConfig().defaultPrefix;
 
-    if (prefix.length > 3) {
+    if (argument.length > 3) {
       await bot
         .getCommandHandler()
         .sendMessage(
@@ -27,7 +28,7 @@ export const command: ICommand = {
 
     bot
       .getDatabaseHandler()
-      .setPrefix(message.server, prefix)
+      .setPrefix(message.server, argument)
       .catch(async (error) => {
         bot
           .getLogger()
@@ -49,7 +50,7 @@ export const command: ICommand = {
       .getCommandHandler()
       .sendMessage(
         message,
-        `The prefix for **${"test"}** has been set to \`${prefix}\`.`,
+        `The prefix for **${"test"}** has been set to \`${argument}\`.`,
         "INFO"
       );
   },

@@ -1,4 +1,4 @@
-import { Embed } from "guilded.ts";
+import { Embed, Message } from "guilded.ts";
 
 class CustomEmbed extends Embed {
   constructor() {

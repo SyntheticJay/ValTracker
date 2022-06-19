@@ -27,7 +27,7 @@ export const event: IEvent = {
             `)
         );
 
-        message.reply(
+        await message.reply(
           "Sorry, there was an error. Please try again later. **This has been logged.**"
         );
       });

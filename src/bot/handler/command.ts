@@ -3,7 +3,7 @@ import { ValorantTracker } from "..";
 import { ICommand, ICooldown, MessageType } from "../types";
 import { readdirSync } from "fs";
 import { join } from "path";
-import { CustomEmbed } from "../embed";
+import { CustomEmbed } from "../extends";
 
 class CommandHandler {
   private readonly bot!: ValorantTracker;
@@ -71,7 +71,7 @@ class CommandHandler {
           (command.cooldown || this.bot.getConfig().defaultCooldown),
       });
 
-      command.handler(this.bot, message, args).catch((error) => {
+      command.handler(this.bot, message, prefix, args).catch((error) => {
         this.bot.getLogger().error(
           new Error(`
 					Error in running command ${command.name}: ${error}
@@ -111,6 +111,10 @@ class CommandHandler {
     await message.channel?.send({
       embeds: embed,
     });
+  }
+
+  public getCommands(): ICommand[] {
+    return this.commands;
   }
 }
 

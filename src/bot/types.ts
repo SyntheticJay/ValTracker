@@ -16,6 +16,7 @@ interface ICommand {
   handler: (
     bot: ValorantTracker,
     message: Message,
+    serverPrefix: string,
     ...args: any[]
   ) => Promise<void>;
 }
