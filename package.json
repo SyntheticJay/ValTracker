@@ -10,6 +10,7 @@
     "@types/knex": "^0.16.1",
     "@types/mysql": "^2.15.21",
     "@types/node": "^18.0.0",
+    "guilded-api-typings": "^0.3.1",
     "guilded.ts": "^0.6.1",
     "knex": "^2.1.0",
     "mysql2": "^2.3.3",
